@@ -1,0 +1,38 @@
+body {
+    background: #000;
+}
+
+.main {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 90px;
+}
+
+.Letra {
+    font-size: 3em;
+    background: #fff;   
+    padding: 10px;
+    position: relative;
+}
+
+.Letra.pisar {
+    transform: scaleY(.4);
+    align-self: flex-end;    
+}
+
+.Letra.pisar::after{
+    content: "";
+    display: block;
+    height: 30px;
+    width: 30px;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%;
+    top: -30px;
+    left: calc(50% - 15px);
+}
