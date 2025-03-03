@@ -8,7 +8,7 @@ body {
     margin: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     gap: 10px;
     height: 90px;
 }
@@ -17,15 +17,13 @@ body {
     font-size: 3em;
     background: #fff;   
     padding: 10px;
-    position: relative;
 }
 
-.Letra.pisar {
-    transform: scaleY(.4);
-    align-self: flex-end;    
+.Letra.aplastar {
+    transform: scaleY(.4) translateY(50px);
 }
 
-.Letra.pisar::after{
+.Letra.aplastar::after{
     content: "";
     display: block;
     height: 30px;

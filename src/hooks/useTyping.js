@@ -1,29 +1,40 @@
 import { useEffect, useRef, useState } from "react"
 
-
-export function useTyping({mainText, velocidad=200}) {
+export function useTyping({ mainText, velocity = 200 }) {
     const textIn = useRef(mainText)
     const [textOut, setTextOut] = useState("")
-    const [letter, setLetter] = useState("")
+    const [letter, setLetter] = useState({ caracter: "", class: "Letra" })
+    const [isAtEnd, setAtEnd] = useState(false)
+
+
+    const cortarAlInicio = () => {
+        const toTextArray = Array.from(textIn.current)
+        const caracter = toTextArray.shift()
+        textIn.current = toTextArray.join("")
+        return caracter
+    }
+
+    const main = () => {
+        const caracter = cortarAlInicio()
+        setLetter({ ...letter, caracter})
+        setTextOut(textOut + caracter)
+        setAtEnd(textIn.current.length ===0)
+    }
+
+    if (textOut.length === 0) {
+        main()
+    }
 
     useEffect(() => {
-        const cortarAlInicio = (total = 1) => {
-            const toTextArray = Array.from(textIn.current)
-            return toTextArray.slice(total).join("")
-        }
+        if (isAtEnd) return
 
-        const timer = setInterval(() => {
-            setLetter(textIn.current.charAt(0))
-            setTextOut(textOut + textIn.current.charAt(0))
-            textIn.current = cortarAlInicio()        
-        }, velocidad)
+        const timer = setInterval(main, velocity)
 
         return () => {
             clearInterval(timer)
         }
 
-    }, [textOut, mainText, velocidad])
+    }, [textOut, mainText, velocity])
 
-    const isAtEnd = textOut.length === mainText.length
-    return {textOut, letter, isAtEnd}
+    return { textOut, letter, isAtEnd }
 }
